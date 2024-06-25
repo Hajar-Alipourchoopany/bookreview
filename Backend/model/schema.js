@@ -53,7 +53,7 @@ const bookSchema = new Schema({
     required: true
   },
   book_image: {
-    type: String
+    type: String,
   },
   created_at: {
     type: Date,

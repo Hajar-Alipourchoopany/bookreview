@@ -18,20 +18,27 @@ export const getBookByISBN = async (req, res) => {
   }
 };
 
-// UC02: Neues Buch erfassen
+// Neues Buch erfassen
 export const addNewBook = async (req, res) => {
   try {
-    const { isbn, title, author, book_image } = req.body;
-    let book = await Book.findOne({ isbn });
+    const { title, author, isbn } = req.body;
+    const coverImageUrl = req.file ? req.file.path : '';
 
-    if (book) {
-      return res.status(400).json({ message: 'Buch existiert bereits.' });
+    const existingBook = await Book.findOne({ isbn });
+    if (existingBook) {
+      return res.status(400).json({ message: 'Buch mit dieser ISBN existiert bereits' });
     }
 
-    book = new Book({ isbn, title, author, book_image });
-    await book.save();
-    res.status(201).json({ message: 'Buch erfolgreich hinzugefügt.', book });
+    const newBook = new Book({
+      title,
+      author,
+      isbn,
+      book_image,
+    });
+
+    await newBook.save();
+    res.status(201).json(newBook);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
