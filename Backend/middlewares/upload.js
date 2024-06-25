@@ -4,9 +4,18 @@ import cloudinary from '../config/claudinary.js';
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: 'profile_images',
-    allowed_formats: ['jpg', 'png'],
+  params: async (req, file) => {
+    let folderName = '';
+    if (file.fieldname === 'profileImageUrl') {
+      folderName = 'profileImage';
+    } else if (file.fieldname === 'book_image') {
+      folderName = 'coverImage';
+    }
+
+    return {
+      folder: folderName,
+      allowed_formats: ['jpg', 'png'],
+    };
   },
 });
 

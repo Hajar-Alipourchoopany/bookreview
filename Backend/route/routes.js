@@ -10,13 +10,13 @@ const router = express.Router();
 router.get('/books/:isbn', getBookByISBN);
 
 // UC02: Neues Buch erfassen
-router.post('/books', addNewBook);
+router.post('/books', upload.single('book_image'),addNewBook);
 
 // UC03: Rezension zu einem Buch hinzufügen
 router.post('/reviews', addReview);
 
 // UC04: Benutzer registrieren
-router.post('/register', upload.single('profileImage'), registerUser);
+router.post('/register', upload.single('profileImageUrl'), registerUser);
 
 // UC05: Benutzer einloggen
 router.post('/login', loginUser);
