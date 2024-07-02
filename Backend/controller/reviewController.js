@@ -22,3 +22,33 @@ export const addReview = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// UC07: Rezension löschen
+export const deleteReview = async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+    const userId = req.body.user_id;
+
+    const review = await Review.findById(reviewId);
+    if (!review) {
+      return res.status(404).json({ message: 'Rezension nicht gefunden.' });
+    }
+
+    // Überprüfen, ob die Rezension dem Benutzer gehört
+    if (review.user_id.toString() !== userId) {
+      return res.status(403).json({ message: 'Sie haben keine Berechtigung, diese Rezension zu löschen.' });
+    }
+
+    await review.remove();
+
+    // Entfernen der Rezension aus dem Benutzer-Dokument
+    await User.updateOne(
+      { _id: userId },
+      { $pull: { reviews: { review_id: reviewId } } }
+    );
+
+    res.status(200).json({ message: 'Rezension erfolgreich gelöscht.' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

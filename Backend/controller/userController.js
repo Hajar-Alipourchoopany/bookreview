@@ -8,7 +8,7 @@ export const registerUser = async (req, res) => {
     const { username, email, password } = req.body;
     const profileImageUrl = req.file ? req.file.path : '';
 
-    // Überprüfen, ob der Benutzer  existiert
+    // Überprüfen, ob der Benutzer existiert
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'Benutzer mit dieser E-Mail existiert bereits' });
@@ -61,16 +61,17 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-// UC05: Benutzer ausloggen
+
+// Benutzer ausloggen
 export const logoutUser = async (req, res) => {
   try {
-    
     res.status(200).json({ message: 'Benutzer erfolgreich ausgeloggt.' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-// UC06: Review eines Benutzers anzeigen
+
+// Bewertungen eines Benutzers anzeigen
 export const getUserReviews = async (req, res) => {
   try {
     const userId = req.params.userId;
