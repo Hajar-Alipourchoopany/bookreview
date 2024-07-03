@@ -1,4 +1,5 @@
-import User from '../model/schema.js';
+import models from '../model/schema.js';
+const { User } = models;
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -6,7 +7,11 @@ import jwt from 'jsonwebtoken';
 export const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const profileImageUrl = req.file ? req.file.path : '';
+    const profileImageUrl = req.file ? req.file.path : req.body.profileImageUrl;
+
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'Alle Felder sind erforderlich' });
+    }
 
     // Überprüfen, ob der Benutzer existiert
     const existingUser = await User.findOne({ email });
@@ -58,7 +63,7 @@ export const loginUser = async (req, res) => {
 
     res.status(200).json({ token, user });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status500().json({ message: error.message });
   }
 };
 
