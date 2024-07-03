@@ -22,7 +22,7 @@ export const getBookByISBN = async (req, res) => {
 export const addNewBook = async (req, res) => {
   try {
     const { title, author, isbn } = req.body;
-    const coverImageUrl = req.file ? req.file.path : '';
+    const book_image = req.file ? req.file.path : '';
 
     const existingBook = await Book.findOne({ isbn });
     if (existingBook) {

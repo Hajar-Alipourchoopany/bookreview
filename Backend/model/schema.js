@@ -5,19 +5,20 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true,
+    required: [true, 'Benutzername ist erforderlich'],
     unique: true
-  },profileImageUrl:{
+  },
+  profileImageUrl: {
     type: String,
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'E-Mail ist erforderlich'],
     unique: true
   },
   password: {
     type: String,
-    required: true
+    required: [true, 'Passwort ist erforderlich']
   },
   created_at: {
     type: Date,
@@ -41,16 +42,16 @@ const userSchema = new Schema({
 const bookSchema = new Schema({
   isbn: {
     type: String,
-    required: true,
+    required: [true, 'ISBN ist erforderlich'],
     unique: true
   },
   title: {
     type: String,
-    required: true
+    required: [true, 'Titel ist erforderlich']
   },
   author: {
     type: String,
-    required: true
+    required: [true, 'Autor ist erforderlich']
   },
   book_image: {
     type: String,
@@ -69,11 +70,11 @@ const bookSchema = new Schema({
 const reviewSchema = new Schema({
   isbn: {
     type: String,
-    required: true
+    required: [true, 'ISBN ist erforderlich']
   },
   review_text: {
     type: String,
-    required: true
+    required: [true, 'Rezensionstext ist erforderlich']
   },
   review_date: {
     type: Date,
@@ -82,15 +83,15 @@ const reviewSchema = new Schema({
   user_id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: [true, 'Benutzer-ID ist erforderlich']
   },
   username: {
     type: String,
-    required: true
+    required: [true, 'Benutzername ist erforderlich']
   },
   rating: {
     type: Number,
-    required: true,
+    required: [true, 'Bewertung ist erforderlich'],
     min: 1,
     max: 5
   }
@@ -101,4 +102,6 @@ const User = mongoose.model('User', userSchema);
 const Book = mongoose.model('Book', bookSchema);
 const Review = mongoose.model('Review', reviewSchema);
 
-export default { User, Book, Review };
+// Export all models as a single default export
+const models = { User, Book, Review };
+export default models;

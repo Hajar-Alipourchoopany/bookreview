@@ -1,7 +1,7 @@
 import express from 'express';
 import { getBookByISBN, addNewBook } from '../controller/bookController.js';
 import { registerUser, loginUser, logoutUser, getUserReviews } from '../controller/userController.js';
-import { addReview } from '../controller/reviewController.js';
+import { addReview, deleteReview } from '../controller/reviewController.js';
 import upload from '../middlewares/upload.js';
 
 const router = express.Router();
@@ -10,10 +10,13 @@ const router = express.Router();
 router.get('/books/:isbn', getBookByISBN);
 
 // UC02: Neues Buch erfassen
-router.post('/books', upload.single('book_image'),addNewBook);
+router.post('/books', upload.single('book_image'), addNewBook);
 
 // UC03: Rezension zu einem Buch hinzufügen
 router.post('/reviews', addReview);
+
+// UC07: Rezension löschen
+router.delete('/reviews/:reviewId', deleteReview);
 
 // UC04: Benutzer registrieren
 router.post('/register', upload.single('profileImageUrl'), registerUser);
