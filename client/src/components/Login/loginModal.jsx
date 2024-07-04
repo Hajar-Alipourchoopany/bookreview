@@ -1,18 +1,26 @@
-
 import React from 'react';
 import Login from './Login';
 import Logout from '../Logout/Logout';
+import { useAuth } from '../../context/AuthProvider';
 
-const LoginModal = ({ token, setToken, closeModal }) => {
+const LoginModal = ({ closeModal }) => {
+  const { isLoggedIn } = useAuth();
+
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={closeModal} style={{ cursor: 'pointer' }}>&times;</span>
-        <h2>{token ? 'Logout' : 'Login'}</h2>
-        {token ? (
-          <Logout setToken={setToken} closeModal={closeModal} />
+    <div className='modal'>
+      <div className='modal-content'>
+        <span
+          className='close'
+          onClick={closeModal}
+          style={{ cursor: 'pointer' }}
+        >
+          &times;
+        </span>
+        <h2>{isLoggedIn ? 'Logout' : 'Login'}</h2>
+        {isLoggedIn ? (
+          <Logout closeModal={closeModal} />
         ) : (
-          <Login setToken={setToken} closeModal={closeModal} />
+          <Login closeModal={closeModal} />
         )}
       </div>
     </div>
