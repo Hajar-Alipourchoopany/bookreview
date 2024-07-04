@@ -31,7 +31,7 @@ const SearchForm = () => {
               <input
                 type='text'
                 className='form-control flex-grow text-xl px-4 py-2 border-2 border-gray-300 rounded-full'
-                placeholder='Search...'
+                placeholder='Search for books...'
                 ref={searchText}
               />
               <button

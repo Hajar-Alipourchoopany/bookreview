@@ -1,5 +1,6 @@
 import Book from '../models/bookSchema.js';
 import Review from '../models/reviewSchema.js';
+import User from '../models/userSchema.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -51,7 +52,7 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     // Überprüfen, ob der Benutzer existiert
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
     if (!user) {
       return res.status(400).json({ message: 'Ungültige Anmeldedaten' });
     }
@@ -67,16 +68,21 @@ export const loginUser = async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.status(200).json({ token, user });
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+
+    res.cookie('token', token).json(userWithoutPassword);
   } catch (error) {
-    res.status500().json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 // Benutzer ausloggen
 export const logoutUser = async (req, res) => {
   try {
-    res.status(200).json({ message: 'Benutzer erfolgreich ausgeloggt.' });
+    res
+      .clearCookie('token')
+      .json({ message: 'Benutzer erfolgreich ausgeloggt.' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

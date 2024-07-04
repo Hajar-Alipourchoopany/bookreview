@@ -5,11 +5,7 @@ const Book = (book) => {
   return (
     <div className='book-item flex flex-col items-center justify-between bg-white p-4 rounded-lg shadow-md'>
       <div className='book-item-img mb-4'>
-        <img
-          src={book.cover_img}
-          alt='cover'
-          className='w-full h-64 object-cover rounded-lg'
-        />
+        <img src={book.cover_img} alt='cover' className='w-full h-64 object-cover rounded-lg' />
       </div>
       <div className='book-item-info text-center'>
         <Link to={`/book/${book.id}`} {...book}>
@@ -20,7 +16,7 @@ const Book = (book) => {
 
         <div className='book-item-info-item author text-sm mb-2'>
           <span className='font-semibold'>Author: </span>
-          <span>{book.author}</span>
+          <span>{book.author.join(", ")}</span>
         </div>
 
         <div className='book-item-info-item edition-count text-sm mb-2'>

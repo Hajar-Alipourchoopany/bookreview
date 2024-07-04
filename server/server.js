@@ -1,7 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import './db/db.js';
-import routes from './route/routes.js';
+import cookieParser from 'cookie-parser';
+import { errorHandler } from './middleware/errorHandler.js';
+import userRouter from './route/userRouter.js';
+import reviewRouter from './route/reviewRouter.js';
+import bookRouter from './route/bookRouter.js';
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -9,11 +13,16 @@ const PORT = process.env.PORT || 8000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
-// route
-app.use('/api', routes);
+// Routes
+app.use('/users', userRouter);
+app.use('/reviews', reviewRouter);
+app.use('/books', bookRouter);
 
-// Startet den server
+// Error Handler
+app.use(errorHandler);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
