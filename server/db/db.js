@@ -1,26 +1,13 @@
-import { MongoClient } from "mongodb";
+import mongoose from 'mongoose';
 
-const uri = "<connection string>";
-
-const client = new MongoClient(uri);
-
-async function run() {
+const connectDB = async () => {
   try {
-    await client.connect();
-    console.log("Connected successfully to MongoDB");
-
-    const database = client.db("booksReview");
-    const collection = database.collection("books");
-
-
-    const document = await collection.findOne({});
-    console.log("Found document:", document);
-  } catch (err) {
-    console.error("An error occurred connecting to MongoDB: ", err);
-  } finally {
-    await client.close();
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB connected successfully');
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error.message);
+    process.exit(1);
   }
-}
+};
 
-run().catch(console.dir);
-
+connectDB();
