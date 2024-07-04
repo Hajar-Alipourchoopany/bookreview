@@ -1,11 +1,12 @@
 import React from 'react';
+import  aboutimg from'../../images/about-img.jpeg';
 
 const About = () => {
   return (
     <section className='about h-screen mt-0 bg-gradient-to-b from-gray-600 to-purple-200 text-gry-900 flex items-center'>
       <div className='container mx-auto flex flex-col md:flex-row items-center'>
         <div className='about-img md:w-1/2'>
-          <img src={require('../../images/about-img.jpeg')} alt="About BookHub" className='w-full h-full object-cover rounded-lg shadow-lg' />
+          <img src={aboutimg} alt="About BookHub" className='w-full h-full object-cover rounded-lg shadow-lg' />
         </div>
         <div className='about-text md:w-1/2 md:ml-8'>
           <h2 className='text-3xl md:text-3xl font-semibold tracking-wide mt-4'>About Hajar&Clara co.Publishing</h2>

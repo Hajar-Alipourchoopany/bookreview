@@ -11,12 +11,12 @@ const PopularTopics = () => {
     const options = {
         responsive: true,
         plugins: {
-            legend: {
-                position: 'top',
+        legend: {
+        position: 'top',
             },
             title: {
-                display: true,
-                text: 'Top 10 Books by Edition Count',
+            display: true,
+            text: 'Top 10 Books by Edition Count',
             },
         },
     };
