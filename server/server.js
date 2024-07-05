@@ -1,47 +1,33 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import Book from './models/Book.js';
-
-dotenv.config();
+import './db/db.js';
+import cookieParser from 'cookie-parser';
+import { errorHandler } from './middleware/errorHandler.js';
+import userRouter from './route/userRouter.js';
+import reviewRouter from './route/reviewRouter.js';
+import bookRouter from './route/bookRouter.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
-app.use(cors());
+// Middleware
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 
+// Routes
+app.use('/users', userRouter);
+app.use('/reviews', reviewRouter);
+app.use('/books', bookRouter);
 
-const mongodbURI = process.env.MONGODB_URI;
-mongoose.connect(mongodbURI).then(() => {
-  console.log('MongoDB connected');
-}).catch((error) => {
-  console.error('MongoDB connection error:', error);
-});
-
-
-app.post('/api/books', async (req, res) => {
-  try {
-    const books = req.body;
-    await Book.insertMany(books);
-    res.status(201).send('Books saved successfully');
-  } catch (error) {
-    res.status(500).send('Error saving books');
-  }
-});
-
-
-app.get('/api/books/top', async (req, res) => {
-  try {
-    const topBooks = await Book.find().sort({ edition_count: -1 }).limit(10);
-    res.status(200).json(topBooks);
-  } catch (error) {
-    res.status(500).send('Error fetching top books');
-  }
-});
+// Error Handler
+app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
-
