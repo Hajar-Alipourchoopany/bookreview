@@ -91,3 +91,30 @@ export const getUserReviews = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+export const getTopReviewer = async (req, res) => {
+  try {
+    const topReviewer = await User.aggregate([
+      {
+        $project: {
+          username: 1,
+          profileImageUrl: 1,
+          reviewCount: { $size: "$reviews" }
+        }
+      },
+      {
+        $sort: { reviewCount: -1 }
+      },
+      {
+        $limit: 1
+      }
+    ]);
+
+    if (topReviewer.length === 0) {
+      return res.status(404).json({ message: 'Keine Reviewer gefunden.' });
+    }
+
+    res.status(200).json(topReviewer[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
