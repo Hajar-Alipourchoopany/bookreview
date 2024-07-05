@@ -4,6 +4,7 @@ import logoImg from '../../images/logo.png';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import SmallMenu from '../SmallMenu/SmallMenu';
 import SignUpModal from '../SignUp/SignUpModal';
+
 import LoginModal from '../Login/LoginModal';
 import { useAuth } from '../../context/AuthProvider';
 
@@ -25,20 +26,25 @@ const Navbar = () => {
     setSignUpModalOpen(false);
   };
 
+
+
   const [toggleMenu, setToggleMenu] = useState(false);
   const handleNavbar = () => setToggleMenu(!toggleMenu);
 
   return (
+<
     <nav className='navbar py-6 px-6 shadow-md bg-blue-50' id='navbar'>
       <div className='container flex items-center justify-between'>
         <div className='brand-and-toggler flex items-center'>
           <Link to='/' className='navbar-brand flex items-center'>
+
             <div>
               <img src={logoImg} alt='site logo' className='w-16 ml-8' />
               <span className='font-bold text-xs ml-'>
                 Hajar&Clara co.Publishing
               </span>
             </div>
+
             <span className='font-bold flex justify-center text-5xl ml-16 pl-20'>
               Popular Book Reviews 2024
             </span>
@@ -70,6 +76,7 @@ const Navbar = () => {
                 to='/'
                 className='nav-link text-black text-sm font-semibold tracking-wide hover:text-purple-600'
               >
+
                 Home
               </Link>
             </li>
@@ -85,6 +92,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+
         <div className='flex justify-center'>
           <SmallMenu />
           {isLoggedIn ? (
@@ -133,6 +141,7 @@ const Navbar = () => {
       </div>
       {isLoginModalOpen && <LoginModal closeModal={closeLoginModal} />}
       {isSignUpModalOpen && <SignUpModal closeModal={closeSignUpModal} />}
+
     </nav>
   );
 };

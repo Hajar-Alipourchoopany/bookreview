@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+
 import { useAuth } from '../../context/AuthProvider';
 
 const Login = ({ closeModal }) => {
   const { login } = useAuth();
+
+import axios from 'axios';
+
+const Login = ({ setToken, closeModal }) => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -11,7 +17,8 @@ const Login = ({ closeModal }) => {
     e.preventDefault();
 
     try {
-      await login(email, password);
+
+    
       closeModal();
     } catch (error) {
       console.error('Error logging in', error);
@@ -20,6 +27,7 @@ const Login = ({ closeModal }) => {
   };
 
   return (
+
     <div className='bg-white p-6 rounded shadow-md'>
       <h2 className='text-2xl font-bold mb-4'>Login</h2>
       {error && <p className='text-red-500 mb-4'>{error}</p>}
@@ -46,9 +54,13 @@ const Login = ({ closeModal }) => {
         >
           Login
         </button>
+
+  
       </form>
     </div>
   );
 };
 
+
 export default Login;
+

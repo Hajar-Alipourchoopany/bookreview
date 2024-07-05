@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Login from './Login';
 import Logout from '../Logout/Logout';
@@ -21,10 +22,12 @@ const LoginModal = ({ closeModal }) => {
           <Logout closeModal={closeModal} />
         ) : (
           <Login closeModal={closeModal} />
+
         )}
       </div>
     </div>
   );
 };
+
 
 export default LoginModal;
