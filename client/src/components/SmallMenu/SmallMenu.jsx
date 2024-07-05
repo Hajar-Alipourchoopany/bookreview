@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context';
 
-const SmallMenu = () => {
-  // const { handleLinkClick } = useContext(AppContext);
+const SmallMenu = () => { 
+const { handleLinkClick } = useContext(AppContext);
 
   return (
     <div className="flex justify-center">

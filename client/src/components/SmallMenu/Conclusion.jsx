@@ -2,7 +2,7 @@ import React from 'react';
 
 const Conclusion = () => {
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 h-screen flex flex-col justify-center">
       <h1 className="text-4xl font-bold text-center my-8">Conclusion Show graphicallys</h1>
       <h2 className="text-2xl text-center my-4">Review Count and Ratings for Popular Books</h2>
       <p className="text-lg text-center my-4">
@@ -30,9 +30,6 @@ const Conclusion = () => {
       </p>
     </div>
   );
-
-
-
 };
 
 export default Conclusion;

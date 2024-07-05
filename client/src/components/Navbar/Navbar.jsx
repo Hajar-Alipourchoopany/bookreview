@@ -30,7 +30,9 @@ const Navbar = () => {
 
   return (
     <nav className='navbar py-6 px-6 shadow-md bg-blue-50' id='navbar'>
+     
       <div className='container flex items-center justify-between'>
+        <div>
         <div className='brand-and-toggler flex items-center'>
           <Link to='/' className='navbar-brand flex items-center'>
             <div>
@@ -43,8 +45,8 @@ const Navbar = () => {
               Popular Book Reviews 2024
             </span>
           </Link>
-        </div>
-        <div className='flex items-center ml-auto'>
+       
+        <div className='flex items-center ml-28'>
           <button
             type='button'
             className='navbar-toggler-btn'
@@ -56,7 +58,7 @@ const Navbar = () => {
             />
           </button>
         </div>
-
+       
         <div
           className={`navbar-collapse ${
             toggleMenu ? 'block' : 'hidden'
@@ -85,7 +87,11 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+        </div>
+        
         <div className='flex justify-center'>
+        
+       
           <SmallMenu />
           {isLoggedIn ? (
             <div className='flex items-center'>
@@ -130,6 +136,7 @@ const Navbar = () => {
             </ul>
           )}
         </div>
+      </div>
       </div>
       {isLoginModalOpen && <LoginModal closeModal={closeLoginModal} />}
       {isSignUpModalOpen && <SignUpModal closeModal={closeSignUpModal} />}
