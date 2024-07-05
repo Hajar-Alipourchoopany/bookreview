@@ -1,5 +1,5 @@
 import models from '../model/schema.js';
-const { User } = models;
+const { User, Review } = models;
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -63,7 +63,7 @@ export const loginUser = async (req, res) => {
 
     res.status(200).json({ token, user });
   } catch (error) {
-    res.status500().json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -91,6 +91,8 @@ export const getUserReviews = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Top-Reviewer anzeigen
 export const getTopReviewer = async (req, res) => {
   try {
     const topReviewer = await User.aggregate([
@@ -114,6 +116,35 @@ export const getTopReviewer = async (req, res) => {
     }
 
     res.status(200).json(topReviewer[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Bewertung zu Favoriten hinzufügen
+export const addReviewToFavorites = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { reviewId } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'Benutzer nicht gefunden.' });
+    }
+
+    const review = await Review.findById(reviewId);
+    if (!review) {
+      return res.status(404).json({ message: 'Rezension nicht gefunden.' });
+    }
+
+    if (user.favorites.includes(reviewId)) {
+      return res.status(400).json({ message: 'Rezension bereits in den Favoriten.' });
+    }
+
+    user.favorites.push(reviewId);
+    await user.save();
+
+    res.status(200).json({ message: 'Rezension zu den Favoriten hinzugefügt.', favorites: user.favorites });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
