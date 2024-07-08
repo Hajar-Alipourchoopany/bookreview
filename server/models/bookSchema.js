@@ -19,6 +19,10 @@ const bookSchema = new Schema({
   book_image: {
     type: String,
   },
+  edition_count: {
+    type: Number,
+    required: true,
+  },
   releaseDate: {
     type: Date,
     required: true,
