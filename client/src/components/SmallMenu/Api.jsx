@@ -1,19 +1,15 @@
-
 import axios from 'axios';
+import Rect, { useState} from "react";
 
-export const getTopRatedBooks = async () => {
+export const getBooksByEditionCount = async () => {
+  const [count, setCount] = useState(null);
   try {
-    const response = await axios.get('/books/top-rated');
-    return response.data;
+    const { data } = await axios.get('http://localhost:8000/books');
     console.log(data);
-    if (Array.isArray(data)) {
-      return data;
-    } else {
-      console.error('Fetched data is not an array:', data);
-      return [];
-    }
+    setCount (data);
+    return data;
   } catch (error) {
-    console.error('Error fetching top rated books:', error);
-    return [];
+    console.error('Error fetching books by edition count:', error);
+    throw error;
   }
 };

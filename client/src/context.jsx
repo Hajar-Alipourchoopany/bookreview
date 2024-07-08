@@ -26,7 +26,7 @@ const AppProvider = ({ children }) => {
             cover_i,
             edition_count,
             first_publish_year,
-            title,
+            title
           } = bookSingle;
 
           return {
@@ -35,7 +35,7 @@ const AppProvider = ({ children }) => {
             cover_id: cover_i,
             edition_count: edition_count,
             first_publish_year: first_publish_year,
-            title: title,
+            title: title
           };
         });
 
